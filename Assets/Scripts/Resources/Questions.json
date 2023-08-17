@@ -1,22 +1,40 @@
 {
     "questions": [
         {
+            "category": "places",
             "question": "Question 1"
         },
         {
+            "category": "objects",
             "question": "Question 2"
         },
         {
+            "category": "verbs",
             "question": "Question 3"
         },
         {
-            "question": "Question 4"
+            "category": "places",
+            "question": "Question 1.1"
         },
         {
-            "question": "Question 5"
+            "category": "objects",
+            "question": "Question 2.1"
         },
         {
-            "question": "Question 6"
+            "category": "verbs",
+            "question": "Question 3.1"
+        },
+        {
+            "category": "places",
+            "question": "Question 1.2"
+        },
+        {
+            "category": "objects",
+            "question": "Question 2.2"
+        },
+        {
+            "category": "verbs",
+            "question": "Question 3.2"
         }
     ]
 }

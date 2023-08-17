@@ -1,8 +1,8 @@
-using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
+using System.Linq;
 
 [System.Serializable]
 public class QuestionData
@@ -13,93 +13,76 @@ public class QuestionData
 [System.Serializable]
 public class Question
 {
+    public string category;
     public string question;
 }
 
 public class QuestionManager : MonoBehaviour
 {
-    public TMP_Text questionTextUI;
-    public TMP_Text feedbackText;
-
+    public TMP_Text questionTextUI, feedbackText;
     public List<Question> questions;
-    private List<int> usedQuestionIndices = new List<int>();
-    private int currentQuestionIndex = 0;
-    private int round = 0;
-
-    private enum GameState
-    {
-        Drawing,
-        Answering
-    }
+    private List<string> categories = new List<string> { "places", "things", "verbs" };
+    private int currentCategoryIndex = 0, currentQuestionIndex = 0, drawingsRemaining = 3;
     private GameState currentState;
+
+    private enum GameState { Drawing, Guessing }
 
     private void Start()
     {
         LoadQuestions();
-        StartDrawingRound();
+        StartDrawingPhase();
     }
 
     private void LoadQuestions()
     {
-        TextAsset jsonFile = Resources.Load<TextAsset>("Questions");
-        QuestionData data = JsonUtility.FromJson<QuestionData>(jsonFile.text);
+        QuestionData data = JsonUtility.FromJson<QuestionData>(Resources.Load<TextAsset>("Questions").text);
         questions = data.questions;
     }
 
-    private void StartDrawingRound()
+    private void StartDrawingPhase()
     {
         currentState = GameState.Drawing;
-        DisplayQuestion();
         feedbackText.text = "Start drawing!";
+        ShuffleQuestions();
+        DisplayQuestion();
     }
 
-    public void SubmitDrawing()
+    public void SubmitAction()
     {
-        if (currentState == GameState.Drawing)
+        if (currentState == GameState.Drawing) NextDrawing();
+        else if (currentState == GameState.Guessing)
         {
-            if (round < 2)
-            {
-                usedQuestionIndices.Add(currentQuestionIndex);
-                round++;
-                StartDrawingRound();
-            }
-            else
-            {
-                currentState = GameState.Answering;
-                feedbackText.text = "Time's up! Submit your answer.";
-            }
+            feedbackText.text = "Answer submitted!";
+            StartDrawingPhase();
         }
-        else if (currentState == GameState.Answering)
+    }
+
+    private void NextDrawing()
+    {
+        drawingsRemaining--;
+        if (drawingsRemaining <= 0) StartGuessingPhase();
+        else
         {
-            feedbackText.text = "Answer submitted! Round complete.";
-            NextQuestion();
-            round = 0;
-            usedQuestionIndices.Clear();
-            StartDrawingRound();
+            NextCategory();
+            StartDrawingPhase();
         }
     }
 
     private void DisplayQuestion()
     {
-        if (currentState == GameState.Drawing)
-        {
-            // Find a new question index that hasn't been used in this round
-            do
-            {
-                currentQuestionIndex = Random.Range(0, questions.Count);
-            }
-            while (usedQuestionIndices.Contains(currentQuestionIndex));
-            
-            questionTextUI.text = questions[currentQuestionIndex].question;
-        }
-        else
-        {
-            questionTextUI.text = "Guess the drawing!";
-        }
+        questionTextUI.text = currentState == GameState.Drawing && currentCategoryIndex < categories.Count && currentQuestionIndex < questions.Count
+            ? questions[currentQuestionIndex].question
+            : currentState == GameState.Drawing ? "All drawings completed!" : "Guess the drawing!";
     }
 
-    private void NextQuestion()
+    private void StartGuessingPhase()
     {
-        // No need to increment the question index here, as it will be done in DisplayQuestion()
+        currentState = GameState.Guessing;
+        feedbackText.text = "Guess the drawing!";
+        DisplayQuestion();
     }
+
+    private void NextCategory() { currentCategoryIndex++; currentQuestionIndex = 0; }
+
+    private void ShuffleQuestions() { questions = questions.OrderBy(q => Random.value).ToList(); }
 }
