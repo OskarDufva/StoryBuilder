@@ -1,13 +1,16 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class LineGenerator : MonoBehaviour
 {
-    public GameObject linePrefab;
+    public List<Line> linePrefabs;
+    public int linePrefabIndex = 0;
+
     public GameObject eraserButton; // Reference to the eraser toggle button
-    public Camera camera;
-    
+    public Camera Cam;
+
     Line activeLine;
     bool eraserMode = false; // Flag to indicate eraser mode
 
@@ -15,12 +18,18 @@ public class LineGenerator : MonoBehaviour
 
     public float zDistance = 10f;
 
+        public void SetLine(int index)
+    {
+        linePrefabIndex = index;
+    }
+
     void Update()
     {
+
         if (eraserMode && Input.GetMouseButton(0))
         {
             // Perform raycast to detect lines for erasing
-            Ray ray = camera.ScreenPointToRay(Input.mousePosition);
+            Ray ray = Cam.ScreenPointToRay(Input.mousePosition);
             RaycastHit hit;
             if (Physics.Raycast(ray, out hit))
             {
@@ -33,16 +42,17 @@ public class LineGenerator : MonoBehaviour
         }
         else if (!eraserMode)
         {
+        
+
             if (Input.GetMouseButtonDown(0))
             {
-                GameObject newLine = Instantiate(linePrefab);
-                activeLine = newLine.GetComponent<Line>();
+                activeLine = Instantiate(linePrefabs[linePrefabIndex]);
             }
 
             if (Input.GetMouseButton(0))
             {
                 Vector3 mousePosA = new Vector3(Input.mousePosition.x, Input.mousePosition.y, zDistance);
-                Vector3 mousePos = camera.ScreenToWorldPoint(mousePosA);
+                Vector3 mousePos = Cam.ScreenToWorldPoint(mousePosA);
                 activeLine.UpdateLine(mousePos);
             }
 
