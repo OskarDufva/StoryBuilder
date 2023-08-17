@@ -5,39 +5,59 @@ using UnityEngine;
 public class LineGenerator : MonoBehaviour
 {
     public GameObject linePrefab;
-
-    Line activeLine;
-
+    public GameObject eraserButton; // Reference to the eraser toggle button
     public Camera camera;
+    
+    Line activeLine;
+    bool eraserMode = false; // Flag to indicate eraser mode
+
+    List<Line> lines = new List<Line>();
 
     public float zDistance = 10f;
-    public float zOffset = 10f;
 
     void Update()
     {
-        if (Input.GetMouseButtonDown(0))
+        if (eraserMode && Input.GetMouseButton(0))
         {
-            GameObject newLine = Instantiate(linePrefab);
-            activeLine = newLine.GetComponent<Line>();
+            // Perform raycast to detect lines for erasing
+            Ray ray = camera.ScreenPointToRay(Input.mousePosition);
+            RaycastHit hit;
+            if (Physics.Raycast(ray, out hit))
+            {
+                Line lineToRemove = hit.collider.GetComponent<Line>();
+                if (lineToRemove != null)
+                {
+                    Destroy(lineToRemove.gameObject); // Erase the line
+                }
+            }
         }
-
-        if (Input.GetMouseButton(0))
+        else if (!eraserMode)
         {
-            Vector3 mousePosA = new Vector3 (Input.mousePosition.x, Input.mousePosition.y, zDistance);
-            Vector3 mousePos = camera.ScreenToWorldPoint(mousePosA);
-            activeLine.UpdateLine(mousePos);
-            Debug.Log("UpdateLine " + mousePos + " " + mousePosA);
-        }
+            if (Input.GetMouseButtonDown(0))
+            {
+                GameObject newLine = Instantiate(linePrefab);
+                activeLine = newLine.GetComponent<Line>();
+            }
 
-        if (Input.GetMouseButtonUp(0))
-        {
-            activeLine = null;
-        }
+            if (Input.GetMouseButton(0))
+            {
+                Vector3 mousePosA = new Vector3(Input.mousePosition.x, Input.mousePosition.y, zDistance);
+                Vector3 mousePos = camera.ScreenToWorldPoint(mousePosA);
+                activeLine.UpdateLine(mousePos);
+            }
 
-        // if (activeLine != null)
-        // {
-        //     Vector2 mousePos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
-        //     activeLine.UpdateLine(mousePos);
-        // }
+            if (Input.GetMouseButtonUp(0))
+            {
+                activeLine = null;
+            }
+        }
+    }
+
+    // Call this function when the eraser button is clicked/toggled
+    public void ToggleEraserMode()
+    {
+        eraserMode = !eraserMode;
     }
 }
+
+
