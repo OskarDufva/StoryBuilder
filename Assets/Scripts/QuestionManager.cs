@@ -1,88 +1,86 @@
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
+using System.Collections.Generic;
 using System.Linq;
-
-[System.Serializable]
-public class QuestionData
-{
-    public List<Question> questions;
-}
-
-[System.Serializable]
-public class Question
-{
-    public string category;
-    public string question;
-}
 
 public class QuestionManager : MonoBehaviour
 {
-    public TMP_Text questionTextUI, feedbackText;
-    public List<Question> questions;
-    private List<string> categories = new List<string> { "places", "things", "verbs" };
-    private int currentCategoryIndex = 0, currentQuestionIndex = 0, drawingsRemaining = 3;
-    private GameState currentState;
+    [System.Serializable]
+    public class Question
+    {
+        public string category;
+        public string question;
+    }
 
-    private enum GameState { Drawing, Guessing }
+    [System.Serializable]
+    private class QuestionDataWrapper
+    {
+        public Question[] questions;
+    }
+
+    public TextMeshProUGUI[] questionTexts;
+    private Dictionary<string, List<Question>> questionDictionary;
+    private bool hasChangedQuestion = false;
+    public Button[] changeButtons;
 
     private void Start()
     {
-        LoadQuestions();
-        StartDrawingPhase();
-    }
-
-    private void LoadQuestions()
-    {
-        QuestionData data = JsonUtility.FromJson<QuestionData>(Resources.Load<TextAsset>("Questions").text);
-        questions = data.questions;
-    }
-
-    private void StartDrawingPhase()
-    {
-        currentState = GameState.Drawing;
-        feedbackText.text = "Start drawing!";
-        ShuffleQuestions();
-        DisplayQuestion();
-    }
-
-    public void SubmitAction()
-    {
-        if (currentState == GameState.Drawing) NextDrawing();
-        else if (currentState == GameState.Guessing)
+        LoadQuestionsFromResources();
+        for (int i = 0; i < questionTexts.Length; i++)
         {
-            feedbackText.text = "Answer submitted!";
-            StartDrawingPhase();
+            DisplayQuestion(i);
         }
     }
 
-    private void NextDrawing()
+    private void LoadQuestionsFromResources()
     {
-        drawingsRemaining--;
-        if (drawingsRemaining <= 0) StartGuessingPhase();
+        TextAsset jsonFile = Resources.Load<TextAsset>("questions"); // Assuming your JSON file is named "questions.json"
+        QuestionDataWrapper wrapper = JsonUtility.FromJson<QuestionDataWrapper>(jsonFile.text);
+        Question[] allQuestions = wrapper.questions;
+        questionDictionary = allQuestions.GroupBy(q => q.category).ToDictionary(group => group.Key, group => group.ToList());
+    }
+
+    private void DisplayQuestion(int index)
+    {
+        string category = questionTexts[index].name;
+        if (questionDictionary.TryGetValue(category, out List<Question> categoryQuestions))
+        {
+            Question randomQuestion = categoryQuestions[Random.Range(0, categoryQuestions.Count)];
+            questionTexts[index].text = randomQuestion.question;
+        }
         else
         {
-            NextCategory();
-            StartDrawingPhase();
+            Debug.LogError("Category not found: " + category);
         }
     }
 
-    private void DisplayQuestion()
+    public void ChangeQuestion(int index)
     {
-        questionTextUI.text = currentState == GameState.Drawing && currentCategoryIndex < categories.Count && currentQuestionIndex < questions.Count
-            ? questions[currentQuestionIndex].question
-            : currentState == GameState.Drawing ? "All drawings completed!" : "Guess the drawing!";
-    }
+        Debug.Log("ChangeQuestion called with index: " + index);
+        if (!hasChangedQuestion)
+        {
+            string category = questionTexts[index].name;
+            if (questionDictionary.TryGetValue(category, out List<Question> categoryQuestions))
+            {
+                Question randomQuestion = categoryQuestions[Random.Range(0, categoryQuestions.Count)];
+                questionTexts[index].text = randomQuestion.question;
+                hasChangedQuestion = true;
 
-    private void StartGuessingPhase()
+                DisableChangeButtons();
+            }
+            else
+            {
+                Debug.LogError("Category not found: " + category);
+            }
+        }
+    }
+    public void DisableChangeButtons()
     {
-        currentState = GameState.Guessing;
-        feedbackText.text = "Guess the drawing!";
-        DisplayQuestion();
+        foreach (Button button in changeButtons)
+        {
+            button.interactable = false;
+            button.gameObject.SetActive(false);
+        }
     }
-
-    private void NextCategory() { currentCategoryIndex++; currentQuestionIndex = 0; }
-
-    private void ShuffleQuestions() { questions = questions.OrderBy(q => Random.value).ToList(); }
 }

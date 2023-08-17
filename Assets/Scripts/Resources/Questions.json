@@ -2,39 +2,39 @@
     "questions": [
         {
             "category": "places",
-            "question": "Question 1"
+            "question": "Comfort place?"
         },
         {
             "category": "objects",
-            "question": "Question 2"
+            "question": "What is your favorite vehicle to travel on?"
         },
         {
             "category": "verbs",
-            "question": "Question 3"
+            "question": "In my freetime I like to?"
         },
         {
             "category": "places",
-            "question": "Question 1.1"
+            "question": "The most beautiful place you've ever seen in person?"
         },
         {
             "category": "objects",
-            "question": "Question 2.1"
+            "question": "Where do you like to go?"
         },
         {
             "category": "verbs",
-            "question": "Question 3.1"
+            "question": "How do you celebrate a win?"
         },
         {
             "category": "places",
-            "question": "Question 1.2"
+            "question": "What is your favorite travel destination?"
         },
         {
             "category": "objects",
-            "question": "Question 2.2"
+            "question": "What's your go-to comfort food?"
         },
         {
             "category": "verbs",
-            "question": "Question 3.2"
+            "question": "What would you do in a tricky scary situation?"
         }
     ]
 }
