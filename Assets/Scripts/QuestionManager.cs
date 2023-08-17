@@ -35,7 +35,7 @@ public class QuestionManager : MonoBehaviour
 
     private void LoadQuestionsFromResources()
     {
-        TextAsset jsonFile = Resources.Load<TextAsset>("questions"); // Assuming your JSON file is named "questions.json"
+        TextAsset jsonFile = Resources.Load<TextAsset>("questions"); 
         QuestionDataWrapper wrapper = JsonUtility.FromJson<QuestionDataWrapper>(jsonFile.text);
         Question[] allQuestions = wrapper.questions;
         questionDictionary = allQuestions.GroupBy(q => q.category).ToDictionary(group => group.Key, group => group.ToList());
