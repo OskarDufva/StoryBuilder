@@ -26,18 +26,11 @@ public class LineGenerator : MonoBehaviour
             Vector3 mousePosA = new Vector3 (Input.mousePosition.x, Input.mousePosition.y, zDistance);
             Vector3 mousePos = camera.ScreenToWorldPoint(mousePosA);
             activeLine.UpdateLine(mousePos);
-            Debug.Log("UpdateLine " + mousePos + " " + mousePosA);
         }
 
         if (Input.GetMouseButtonUp(0))
         {
             activeLine = null;
         }
-
-        // if (activeLine != null)
-        // {
-        //     Vector2 mousePos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
-        //     activeLine.UpdateLine(mousePos);
-        // }
     }
 }
