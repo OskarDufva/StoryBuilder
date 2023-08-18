@@ -19,10 +19,14 @@ public class QuestionManager : MonoBehaviour
         public Question[] questions;
     }
 
+    [SerializeField]
+    private QuestionData questionData;
     public TextMeshProUGUI[] questionTexts;
     private Dictionary<string, List<Question>> questionDictionary;
     private bool hasChangedQuestion = false;
     public Button[] changeButtons;
+
+    private List<Question> selectedQuestions = new List<Question>(new Question[3]);
 
     private void Start()
     {
@@ -30,6 +34,7 @@ public class QuestionManager : MonoBehaviour
         for (int i = 0; i < questionTexts.Length; i++)
         {
             DisplayQuestion(i);
+            selectedQuestions.Add(new Question());
         }
     }
 
@@ -58,6 +63,7 @@ public class QuestionManager : MonoBehaviour
     public void ChangeQuestion(int index)
     {
         Debug.Log("ChangeQuestion called with index: " + index);
+
         if (!hasChangedQuestion)
         {
             string category = questionTexts[index].name;
@@ -68,6 +74,17 @@ public class QuestionManager : MonoBehaviour
                 hasChangedQuestion = true;
 
                 DisableChangeButtons();
+
+                if(questionData != null)
+                {
+                    selectedQuestions[index] = randomQuestion;
+                    Debug.Log("Index: " + index);
+                    questionData.SaveAllQuestionsToQuestionData(selectedQuestions);
+                }
+                else
+                {
+                    Debug.LogError("QuestionData is null");
+                }
             }
             else
             {
