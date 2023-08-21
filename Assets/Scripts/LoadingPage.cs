@@ -6,8 +6,13 @@ using UnityEngine.SceneManagement;
 
 public class LoadingPage : MonoBehaviour
 {
-   public void LoadScene(sceneName)
+    public void GoToNextScene()
     {
-        SceneManager.LoadScene(sceneName);
+        SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex + 1);
+    }
+
+    public void BackToPreviousScene()
+    {
+        SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex - 1);
     }
 }

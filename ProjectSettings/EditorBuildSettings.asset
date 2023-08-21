@@ -12,9 +12,9 @@ EditorBuildSettings:
     path: Assets/Scenes/Question_Page.unity
     guid: 714a9f2b0cb78a84db759273e7e1ee6d
   - enabled: 1
-    path: Assets/Scenes/Answer_Page 1.unity
-    guid: d7918e730edc9174c868b4a74a7d5a5f
-  - enabled: 1
     path: Assets/Scenes/DrawScene.unity
     guid: 5927e77f86a1bd745a910987cc3ffc00
+  - enabled: 1
+    path: Assets/Scenes/Review_Page 1.unity
+    guid: d7918e730edc9174c868b4a74a7d5a5f
   m_configObjects: {}
