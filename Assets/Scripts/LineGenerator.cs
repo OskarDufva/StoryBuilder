@@ -14,13 +14,20 @@ public class LineGenerator : MonoBehaviour
     Line activeLine;
     bool eraserMode = false; // Flag to indicate eraser mode
 
-    List<Line> lines = new List<Line>();
+    private List<Line> lines = new List<Line>();
+
+    List<Line> temporaryLines = new List<Line>();
 
     public float zDistance = 10f;
 
         public void SetLine(int index)
     {
         linePrefabIndex = index;
+    }
+
+    public void AddLine(Line line)
+    {
+        lines.Add(line);
     }
 
     void Update()
@@ -57,9 +64,16 @@ public class LineGenerator : MonoBehaviour
             }
 
             if (Input.GetMouseButtonUp(0))
+
             {
+            if (activeLine != null)
+            {
+                temporaryLines.Add(activeLine); // Add line to temporary list
+                LineManager.Instance.AddLine(activeLine);
                 activeLine = null;
             }
+            }
+
         }
     }
 
@@ -67,6 +81,18 @@ public class LineGenerator : MonoBehaviour
     public void ToggleEraserMode()
     {
         eraserMode = !eraserMode;
+    }
+
+    public void ClearTemporaryLines()
+    {
+        foreach (Line line in temporaryLines)
+        {
+            if (line != null)
+            {
+                Destroy(line.gameObject);
+            }
+        }
+        temporaryLines.Clear();
     }
 }
 
