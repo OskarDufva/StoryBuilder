@@ -7,15 +7,27 @@ public class QuestionData : ScriptableObject
 {
     public List<Question> selectedQuestions = new List<Question>();
 
-    public void SaveAllQuestionsToQuestionData(List<Question> newSelectedQuestions)
+    public void SaveSelectedQuestions(Question question)
     {
-        // Update only the selected questions that changed
-        for (int i = 0; i < newSelectedQuestions.Count; i++)
+        // Check if the question already exists in the list
+        int existingIndex = selectedQuestions.FindIndex(q => q.category == question.category);
+
+        if (existingIndex >= 0)
         {
-            if (newSelectedQuestions[i] != null && i < selectedQuestions.Count)
-            {
-                selectedQuestions[i] = newSelectedQuestions[i];
-            }
+            // Replace the existing question with the new one
+            selectedQuestions[existingIndex] = question;
         }
+        else
+        {
+            // Add the question to the list if it doesn't exist
+            selectedQuestions.Add(question);
+        }
+
+        // Convert the list of selected questions to a serialized format (JSON, for example)
+        string serializedData = JsonUtility.ToJson(this);
+
+        // Save the serialized data to player preferences
+        PlayerPrefs.SetString("SelectedQuestions", serializedData);
+        PlayerPrefs.Save();
     }
 }
