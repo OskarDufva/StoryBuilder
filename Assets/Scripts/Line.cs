@@ -9,9 +9,11 @@ public class Line : MonoBehaviour
 
     List<Vector3> points;
 
-    public MeshCollider meshCollider;
+    public MeshCollider meshCollider;   
 
     public float precision = 0.1f;
+
+    public List<Vector3> positions = new List<Vector3>();
 
     public void UpdateLine(Vector3 position)
     {
@@ -27,6 +29,8 @@ public class Line : MonoBehaviour
             SetPoint(position);
         } 
 
+        positions.Add(position);
+
     }
 
     void SetPoint(Vector3 point)
@@ -38,5 +42,6 @@ public class Line : MonoBehaviour
         var newMesh = new Mesh();
         lineRenderer.BakeMesh(newMesh, true);
         meshCollider.sharedMesh = newMesh;
+        //DontDestroyOnLoad(gameObject);
     }
 }
