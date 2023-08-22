@@ -3,6 +3,7 @@ using UnityEngine.UI;
 using TMPro;
 using System.Collections.Generic;
 using System.Linq;
+using UnityEngine.EventSystems;
 
 public class QuestionManager : MonoBehaviour
 {
@@ -21,20 +22,22 @@ public class QuestionManager : MonoBehaviour
 
     [SerializeField]
     private QuestionData questionData;
+
+    private List<string> displayedQuestions = new List<string>();
+
     public TextMeshProUGUI[] questionTexts;
     private Dictionary<string, List<Question>> questionDictionary;
+
     private bool hasChangedQuestion = false;
     public Button[] changeButtons;
 
-    private List<Question> selectedQuestions = new List<Question>(new Question[3]);
-
     private void Start()
     {
+        questionData.selectedQuestions.Clear();
         LoadQuestionsFromResources();
         for (int i = 0; i < questionTexts.Length; i++)
         {
             DisplayQuestion(i);
-            selectedQuestions.Add(new Question());
         }
     }
 
@@ -53,11 +56,19 @@ public class QuestionManager : MonoBehaviour
         {
             Question randomQuestion = categoryQuestions[Random.Range(0, categoryQuestions.Count)];
             questionTexts[index].text = randomQuestion.question;
+
+            if(!displayedQuestions.Contains(randomQuestion.question))
+            {
+                questionData.selectedQuestions.Add(randomQuestion);
+                displayedQuestions.Add(randomQuestion.question);
+            }
         }
         else
         {
             Debug.LogError("Category not found: " + category);
         }
+
+        
     }
 
     public void ChangeQuestion(int index)
@@ -74,22 +85,19 @@ public class QuestionManager : MonoBehaviour
                 hasChangedQuestion = true;
 
                 DisableChangeButtons();
+                
+                Question selectedQuestion = new Question();
+                selectedQuestion.category = randomQuestion.category;
+                selectedQuestion.question = randomQuestion.question;
 
-                if(questionData != null)
-                {
-                    selectedQuestions[index] = randomQuestion;
-                    Debug.Log("Index: " + index);
-                    questionData.SaveAllQuestionsToQuestionData(selectedQuestions);
-                }
-                else
-                {
-                    Debug.LogError("QuestionData is null");
-                }
+                questionData.SaveSelectedQuestions(selectedQuestion);
             }
             else
             {
                 Debug.LogError("Category not found: " + category);
             }
+
+
         }
     }
     public void DisableChangeButtons()
@@ -100,4 +108,9 @@ public class QuestionManager : MonoBehaviour
             button.gameObject.SetActive(false);
         }
     }
+
+    // public void SaveQuestions()
+    // {
+    //     questionData.SaveSelectedQuestions(null);
+    // }
 }

@@ -12,4 +12,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 199663d95b9b3424ca887b7db9b80e49, type: 3}
   m_Name: QuestionData
   m_EditorClassIdentifier: 
-  selectedQuestions: []
+  selectedQuestions:
+  - category: places
+    question: What is your favorite travel destination?
+  - category: objects
+    question: What is your favorite vehicle to travel on?
+  - category: verbs
+    question: What would you do in a tricky scary situation?
+  - category: places
+    question: The most beautiful place you've ever seen in person?
