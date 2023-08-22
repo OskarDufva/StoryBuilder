@@ -44,7 +44,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f2dd5fb12c14d6849a753cc3e107e2cd, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  linePrefab: {fileID: 7020827504486254230, guid: 404986b5690449747818c3639cd66fcf, type: 3}
+  linePrefabs:
+  - {fileID: 4672398251366321187, guid: 404986b5690449747818c3639cd66fcf, type: 3}
+  - {fileID: 4672398251366321187, guid: 0fbf4a2deff6ddc448d6fe0a71785372, type: 3}
+  - {fileID: 4672398251366321187, guid: eaf9339f0188b74408dded03f3a173cc, type: 3}
+  - {fileID: 4672398251366321187, guid: 21ea543e207542243acfdfc4d646e6cc, type: 3}
+  - {fileID: 4672398251366321187, guid: d1f30f9e8c1b61146adbc238dc6ddbe4, type: 3}
+  linePrefabIndex: 0
   eraserButton: {fileID: 0}
-  camera: {fileID: 0}
+  Cam: {fileID: 0}
   zDistance: 10
