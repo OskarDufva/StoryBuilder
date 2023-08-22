@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.SceneManagement;
 
 public class LineGenerator : MonoBehaviour
 {
@@ -20,6 +21,8 @@ public class LineGenerator : MonoBehaviour
 
     public float zDistance = 10f;
 
+    private bool playMode = false;
+
         public void SetLine(int index)
     {
         linePrefabIndex = index;
@@ -32,6 +35,12 @@ public class LineGenerator : MonoBehaviour
 
     void Update()
     {
+
+        if (SceneManager.GetActiveScene().buildIndex == 1)
+        {
+            playMode = true;
+        }   
+
 
         if (eraserMode && Input.GetMouseButton(0))
         {
@@ -47,7 +56,7 @@ public class LineGenerator : MonoBehaviour
                 }
             }
         }
-        else if (!eraserMode)
+        else if (!eraserMode && playMode == true)
         {
         
 
@@ -78,7 +87,7 @@ public class LineGenerator : MonoBehaviour
     }
 
     // Call this function when the eraser button is clicked/toggled
-    public void ToggleEraserMode()
+    public void ToggleEraserMode()  
     {
         eraserMode = !eraserMode;
     }

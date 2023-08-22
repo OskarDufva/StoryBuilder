@@ -10,6 +10,7 @@ public class SceneTransition : MonoBehaviour
 
     public void NextScene()
     {
+
         SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex + 1);
     }
 
