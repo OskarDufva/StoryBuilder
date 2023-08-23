@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using System.Linq;
+using System.Drawing;
 
 public class Line : MonoBehaviour
 {   
@@ -42,6 +43,28 @@ public class Line : MonoBehaviour
         var newMesh = new Mesh();
         lineRenderer.BakeMesh(newMesh, true);
         meshCollider.sharedMesh = newMesh;
-        //DontDestroyOnLoad(gameObject);
+    }
+
+    public List<Vector3> GetPositions()
+    {
+        List<Vector3> positions = new List<Vector3>();
+
+        foreach (var point in points)
+        {
+            positions.Add(point);
+        }
+
+        return positions;
+    }
+
+    public void SetPositions(List<Vector3> positions)
+    {
+        points.Clear();
+        this.lineRenderer.positionCount = 0;
+
+        foreach (Vector3 position in positions)
+        {
+            UpdateLine(position);
+        }
     }
 }

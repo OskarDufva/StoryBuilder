@@ -77,6 +77,7 @@ public class LineGenerator : MonoBehaviour
             {
             if (activeLine != null)
             {
+                lines.Add(activeLine);
                 temporaryLines.Add(activeLine); // Add line to temporary list
                 LineManager.Instance.AddLine(activeLine);
                 activeLine = null;
