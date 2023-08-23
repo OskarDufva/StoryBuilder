@@ -8,6 +8,8 @@ public class Line : MonoBehaviour
 {   
     public LineRenderer lineRenderer;
 
+    public int linePrefabIndex;
+
     List<Vector3> points;
 
     public MeshCollider meshCollider;   
@@ -59,9 +61,6 @@ public class Line : MonoBehaviour
 
     public void SetPositions(List<Vector3> positions)
     {
-        points.Clear();
-        this.lineRenderer.positionCount = 0;
-
         foreach (Vector3 position in positions)
         {
             UpdateLine(position);

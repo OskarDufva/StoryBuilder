@@ -5,26 +5,32 @@ using UnityEngine;
 public class LineSaver : MonoBehaviour
 {
     
-    public List<Line> lines;
+    public LineGenerator lineGenerator;
+
+    public static Dictionary<string, List<LineData>> savedLines = new();
+
+    private void Start() {
+        savedLines.Clear();
+    }
 
     public void SaveLines()
     {
-        List<LineData> lineDataList = new List<LineData>();
+        List<LineData> lineDataList = new();
 
-        foreach (Line line in lines)
+        foreach (Line line in lineGenerator.SpawnedLines)
         {
-            LineData lineData = new LineData();
-            lineData.positions = line.GetPositions();
+            LineData lineData = new()
+            {
+                positions = line.GetPositions(),
+                linePrefabIndex = line.linePrefabIndex
+            };
 
             lineDataList.Add(lineData);
             Debug.Log("Saved line with " + lineData.positions.Count + " points");
         }
 
-        string json = JsonUtility.ToJson(lineDataList);
-        Debug.Log(json);
-        PlayerPrefs.SetString("SavedLines", json);
-        Debug.Log("Saved " + lineDataList.Count + " lines");
-        PlayerPrefs.Save();
+        savedLines["SavedLines"] = lineDataList;
+
     }
 
 }

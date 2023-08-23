@@ -17,6 +17,8 @@ public class LineGenerator : MonoBehaviour
 
     private List<Line> lines = new List<Line>();
 
+    public List<Line> SpawnedLines => lines;
+    
     List<Line> temporaryLines = new List<Line>();
 
     public float zDistance = 10f;
@@ -63,6 +65,7 @@ public class LineGenerator : MonoBehaviour
             if (Input.GetMouseButtonDown(0))
             {
                 activeLine = Instantiate(linePrefabs[linePrefabIndex]);
+                activeLine.linePrefabIndex = linePrefabIndex;
             }
 
             if (Input.GetMouseButton(0))

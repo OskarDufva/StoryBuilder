@@ -86,12 +86,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 434bfe2bc7551214da240517585b92be, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  lines:
-  - {fileID: 4672398251366321187, guid: 404986b5690449747818c3639cd66fcf, type: 3}
-  - {fileID: 4672398251366321187, guid: eaf9339f0188b74408dded03f3a173cc, type: 3}
-  - {fileID: 4672398251366321187, guid: 0fbf4a2deff6ddc448d6fe0a71785372, type: 3}
-  - {fileID: 4672398251366321187, guid: d1f30f9e8c1b61146adbc238dc6ddbe4, type: 3}
-  - {fileID: 4672398251366321187, guid: 21ea543e207542243acfdfc4d646e6cc, type: 3}
+  lineGenerator: {fileID: 0}
 --- !u!114 &1605425659392754598
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -104,10 +99,5 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 99702275696f9544080d14d1c56b378b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  linePrefabs:
-  - {fileID: 4672398251366321187, guid: 404986b5690449747818c3639cd66fcf, type: 3}
-  - {fileID: 4672398251366321187, guid: eaf9339f0188b74408dded03f3a173cc, type: 3}
-  - {fileID: 4672398251366321187, guid: 0fbf4a2deff6ddc448d6fe0a71785372, type: 3}
-  - {fileID: 4672398251366321187, guid: d1f30f9e8c1b61146adbc238dc6ddbe4, type: 3}
-  - {fileID: 4672398251366321187, guid: 21ea543e207542243acfdfc4d646e6cc, type: 3}
-  lineParent: {fileID: 2815448391460700130, guid: 404986b5690449747818c3639cd66fcf, type: 3}
+  lineParent: {fileID: 0}
+  lineGenerator: {fileID: 0}
