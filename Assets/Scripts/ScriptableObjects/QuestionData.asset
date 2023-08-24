@@ -19,5 +19,3 @@ MonoBehaviour:
     question: What is your favorite vehicle to travel on?
   - category: verbs
     question: What would you do in a tricky scary situation?
-  - category: places
-    question: The most beautiful place you've ever seen in person?

@@ -33,6 +33,10 @@ public class QuestionManager : MonoBehaviour
 
     private void Start()
     {
+        if (questionData == null){
+            Debug.LogError("QuestionData is null!");
+            return;
+        }
         questionData.selectedQuestions.Clear();
         LoadQuestionsFromResources();
         for (int i = 0; i < questionTexts.Length; i++)
@@ -44,6 +48,7 @@ public class QuestionManager : MonoBehaviour
     private void LoadQuestionsFromResources()
     {
         TextAsset jsonFile = Resources.Load<TextAsset>("questions"); 
+        Debug.Log("Loaded JSON: " + jsonFile.text);
         QuestionDataWrapper wrapper = JsonUtility.FromJson<QuestionDataWrapper>(jsonFile.text);
         Question[] allQuestions = wrapper.questions;
         questionDictionary = allQuestions.GroupBy(q => q.category).ToDictionary(group => group.Key, group => group.ToList());
