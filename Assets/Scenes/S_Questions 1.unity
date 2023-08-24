@@ -372,11 +372,32 @@ PrefabInstance:
       propertyPath: m_Name
       value: Canvas_Oskar
       objectReference: {fileID: 0}
-    m_RemovedComponents: []
+    m_RemovedComponents:
+    - {fileID: 2095458329590139875, guid: caf965d8e06297342b365252ea3e42f8, type: 3}
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
-    m_AddedComponents: []
+    m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 6766408962174337813, guid: caf965d8e06297342b365252ea3e42f8, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 312605276}
   m_SourcePrefab: {fileID: 100100000, guid: caf965d8e06297342b365252ea3e42f8, type: 3}
+--- !u!1 &312605275 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 6766408962174337813, guid: caf965d8e06297342b365252ea3e42f8, type: 3}
+  m_PrefabInstance: {fileID: 312605274}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &312605276
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 312605275}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bae7b892fdc40814989b79d1219555d0, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &340293050
 GameObject:
   m_ObjectHideFlags: 0

@@ -6,7 +6,7 @@ using UnityEngine.SceneManagement;
 
 public class LoadingPage : MonoBehaviour
 {
-   public void LoadScene(sceneName)
+   public void LoadScene(string sceneName)
     {
         SceneManager.LoadScene(sceneName);
     }

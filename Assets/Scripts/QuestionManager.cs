@@ -108,9 +108,4 @@ public class QuestionManager : MonoBehaviour
             button.gameObject.SetActive(false);
         }
     }
-
-    // public void SaveQuestions()
-    // {
-    //     questionData.SaveSelectedQuestions(null);
-    // }
 }
