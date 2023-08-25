@@ -38,7 +38,7 @@ public class LineGenerator : MonoBehaviour
     void Update()
     {
 
-        if (SceneManager.GetActiveScene().buildIndex == 1)
+        if (SceneManager.GetActiveScene().buildIndex == 4)
         {
             playMode = true;
         }   
