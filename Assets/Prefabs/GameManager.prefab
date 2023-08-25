@@ -86,7 +86,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 434bfe2bc7551214da240517585b92be, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  lineGenerator: {fileID: 0}
+  lineGenerator: {fileID: 236028070171437264, guid: 771ac2fc544d5b446b8fcdf5fd0f48af, type: 3}
 --- !u!114 &1605425659392754598
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -100,4 +100,4 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   lineParent: {fileID: 2815448391460700130, guid: 404986b5690449747818c3639cd66fcf, type: 3}
-  lineGenerator: {fileID: 0}
+  lineGenerator: {fileID: 236028070171437264, guid: 771ac2fc544d5b446b8fcdf5fd0f48af, type: 3}
