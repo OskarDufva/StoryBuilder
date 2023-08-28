@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.SceneManagement;
+using System.Threading;
+using TMPro;
 
 public class LineGenerator : MonoBehaviour
 {
@@ -11,6 +13,9 @@ public class LineGenerator : MonoBehaviour
 
     public GameObject eraserButton; // Reference to the eraser toggle button
     public Camera Cam;
+
+    public float timer = 240f;
+    [SerializeField]TMP_Text timerText;
 
     Line activeLine;
     bool eraserMode = false; // Flag to indicate eraser mode
@@ -41,6 +46,19 @@ public class LineGenerator : MonoBehaviour
         if (SceneManager.GetActiveScene().buildIndex == 4)
         {
             playMode = true;
+        }
+
+        if  (timer > 0)
+        {
+            timer -= Time.deltaTime;
+            Debug.Log(Mathf.Round(timer));
+            timerText.text = timer.ToString("F0");
+        }
+
+        if  (timer <= 0)
+        {
+            playMode = false;
+            timer = 240f;
         }   
 
 
@@ -102,7 +120,7 @@ public class LineGenerator : MonoBehaviour
         {
             if (line != null)
             {
-                Destroy(line.gameObject);
+                Destroy(line.gameObject);       
             }
         }
         temporaryLines.Clear();
