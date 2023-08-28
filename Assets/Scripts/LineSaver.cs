@@ -9,7 +9,8 @@ public class LineSaver : MonoBehaviour
 
     public static Dictionary<string, List<LineData>> savedLines = new();
 
-    private void Start() {
+    private void Start() 
+    {
         savedLines.Clear();
     }
 
@@ -29,8 +30,15 @@ public class LineSaver : MonoBehaviour
             Debug.Log("Saved line with " + lineData.positions.Count + " points");
         }
 
+        savedLines.Clear();
+
         savedLines["SavedLines"] = lineDataList;
 
+    }
+
+    public void ClearSavedLines()
+    {
+        savedLines.Clear();
     }
 
 }
