@@ -85,12 +85,19 @@ public class QuestionManager : MonoBehaviour
             string category = questionTexts[index].name;
             if (questionDictionary.TryGetValue(category, out List<Question> categoryQuestions))
             {
-                Question randomQuestion = categoryQuestions[Random.Range(0, categoryQuestions.Count)];
+                string currentQuestion = questionTexts[index].text;
+
+                Question randomQuestion = null;
+                do
+                {
+                    randomQuestion = categoryQuestions[Random.Range(0, categoryQuestions.Count)];
+                } while (randomQuestion.question == currentQuestion);
+
                 questionTexts[index].text = randomQuestion.question;
                 hasChangedQuestion = true;
 
                 DisableChangeButtons();
-                
+
                 Question selectedQuestion = new Question();
                 selectedQuestion.category = randomQuestion.category;
                 selectedQuestion.question = randomQuestion.question;
