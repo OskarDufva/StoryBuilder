@@ -24,6 +24,6 @@ EditorBuildSettings:
     path: Assets/Scenes/DrawSceneTest1.unity
     guid: b445b7c1701139d4b91333603b4ada47
   - enabled: 1
-    path: Assets/Scenes/S_Questions Ux UI.unity
+    path: Assets/Scenes/UI Questions.unity
     guid: ea72fca8f5a802f4499a5c1c7caee24c
   m_configObjects: {}
